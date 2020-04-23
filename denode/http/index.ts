@@ -165,6 +165,7 @@ function register(property: string, method: string, options: any, methodOptions:
         } else if (typeof res === 'object') {
             context.json(res)
         }
+        
         request.respond(context.response)
     });
 }
