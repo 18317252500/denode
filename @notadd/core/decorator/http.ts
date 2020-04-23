@@ -1,4 +1,4 @@
-import { createMethodDecorator } from '../../decorator/index.ts'
+import { createMethodDecorator, createParameterDecorator } from '../../decorator/index.ts'
 
 export const PostMetadataKey = `@nger/http PostMetadataKey`
 
@@ -179,3 +179,5 @@ export const Trace = createMethodDecorator<string | TraceOptions>(TraceMetadataK
     }
 })
 
+export const ContextMetadataKey = `@nger/http ContextMetadataKey`
+export const Context = createParameterDecorator(ContextMetadataKey)

@@ -6,11 +6,11 @@ import {
     PutMetadataKey, PutOptions, PostOptions, HeadMetadataKey, HeadOptions,
     PatchMetadataKey, PatchOptions, DeleteMetadataKey, DeleteOptions,
     ConnectMetadataKey, ConnectOptions, OptionsMetadataKey, OptionsOptions,
-    TraceMetadataKey, TraceOptions
+    TraceMetadataKey, TraceOptions, ContextMetadataKey
 } from '../core/index.ts';
 import { HTTP_URL, HTTP_REQUEST, HTTP_COOKIES } from './token.ts';
 import { getCookies, Status, Response, join, extname, Cookie, setCookie, ServerRequest } from "../deno/index.ts";
-import { IClassDecorator, IMethodDecorator } from '../decorator/index.ts';
+import { IClassDecorator, IMethodDecorator, IParameterDecorator } from '../decorator/index.ts';
 import { Router } from './router.ts';
 import { MIME, Header } from './const.ts';
 const { cwd, lstat, readFile } = Deno;
@@ -233,10 +233,17 @@ export class HttpModule {
                 },
                 {
                     provide: TraceMetadataKey,
-                    useValue: (injector: Injector, method: IMethodDecorator<any, TraceOptions>, parent: IClassDecorator<any, ControllerOptions>, ref: NgerRef<any>, ...args: any[]) => {
+                    useValue: (injector: Injector, method: IMethodDecorator<any, TraceOptions>, parent: IClassDecorator<any, ControllerOptions>, ref: NgerRef<any>) => {
                         const options = parent.options;
                         const methodOptions = method.options;
                         register(method.property as string, 'TRACE', options, methodOptions, injector, ref)
+                    }
+                },
+                {
+                    provide: ContextMetadataKey,
+                    useValue: (method: any, parameters: any[], instance: any, injector: Injector, param: IParameterDecorator) => {
+                        const context = injector.get(HttpContext);
+                        Reflect.set(parameters, param.parameterIndex, context)
                     }
                 },
                 {
