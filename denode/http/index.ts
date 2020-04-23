@@ -153,11 +153,15 @@ function register(property: string, method: string, options: any, methodOptions:
         const res = await handler();
         const context = injector.get(HttpContext)
         const request = injector.get(HTTP_REQUEST)
+        console.log({
+            res,
+            isValidElement: isValidElement(res)
+        })
         if (typeof res === 'string') {
             context.string(res)
-        } else if(isValidElement(res)){
+        } else if (isValidElement(res)) {
             const str = renderToString(res)
-            context.html(str||'')
+            context.html(str || '')
         } else if (typeof res === 'object') {
             context.json(res)
         }

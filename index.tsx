@@ -1,6 +1,6 @@
-import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/core/index.ts'
-import { HttpModule, HttpContext } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/http/index.ts'
-import { React } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/react/index.ts';
+import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/core.ts'
+import { HttpModule, HttpContext } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/http.ts'
+import { React } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/react.ts';
 
 @Injectable()
 export class DemoService { }
