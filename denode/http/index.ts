@@ -13,6 +13,7 @@ import { getCookies, Status, Response, join, extname, Cookie, setCookie, ServerR
 import { IClassDecorator, IMethodDecorator, IParameterDecorator } from '../decorator/index.ts';
 import { Router } from './router.ts';
 import { MIME, Header } from './const.ts';
+import { isValidElement, renderToString } from '../react/index.ts'
 const { cwd, lstat, readFile } = Deno;
 import { NotFoundException, NotImplementedException } from './exception.ts'
 export function contentType(filepath: string): string | undefined {
@@ -154,6 +155,9 @@ function register(property: string, method: string, options: any, methodOptions:
         const request = injector.get(HTTP_REQUEST)
         if (typeof res === 'string') {
             context.string(res)
+        } else if(isValidElement(res)){
+            const str = renderToString(res)
+            context.html(str||'')
         } else if (typeof res === 'object') {
             context.json(res)
         }

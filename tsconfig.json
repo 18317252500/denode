@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "reactNamespace": "React",
     "rootDir": "./",
     "sourceRoot": "./",
     "paths": {

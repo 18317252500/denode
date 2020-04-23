@@ -102,11 +102,7 @@ export function createPlain(json: any, key: string = `__plain_desc`, handler?: (
         return json;
     }
 }
-export class PlainModuleRef<T> {
-    instance: T;
-    constructor(instance: T) {
-        this.instance = instance;
-    }
+export class PlainModuleRef<T = any> {
     create<T>(json: any, key: string = `__plain_desc`, handler?: (source: any, target: any) => any): T {
         return createPlain(json, key, handler)
     }
@@ -115,6 +111,5 @@ export class PlainModuleRef<T> {
     }
 }
 export function createPlainModule<T>(type: Type<T>): PlainModuleRef<T> {
-    const instance = new type();
-    return new PlainModuleRef<T>(instance);
+    return new PlainModuleRef<T>();
 }

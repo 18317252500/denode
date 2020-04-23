@@ -4,9 +4,10 @@
 ## 开始
 
 ```ts
-import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from './@notadd/core/index.ts'
-import { HttpModule, HttpContext } from './@notadd/http/index.ts'
-import { Cookie } from './@notadd/deno/index.ts'
+import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from './denode/core/index.ts'
+import { HttpModule, HttpContext } from './denode/http/index.ts'
+import { React } from './denode/react/index.ts';
+
 @Injectable()
 export class DemoService { }
 
@@ -14,12 +15,12 @@ export class DemoService { }
 export class DemoController {
   constructor(private demo: DemoService) { }
   @Get()
-  index(@Context() context: HttpContext) {
+  index(@Context() context: HttpContext):any {
     context.setCookie({
       name: 'demo',
       value: 'demo2'
     });
-    return `hello index get`
+    return <h1>hello index get</h1>
   }
 
   @Post()
