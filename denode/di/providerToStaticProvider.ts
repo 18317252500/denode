@@ -48,7 +48,7 @@ export function getClassInjectDeps(nger: INgerDecorator) {
                     deps[it.parameterIndex].push(options.token)
                 }
             } else {
-                console.log(`getClassInjectDeps error ${it.metadataKey}`)
+                // console.log(`getClassInjectDeps error ${it.metadataKey}`)
             }
         })
         cls.parameters.map((it, index) => {

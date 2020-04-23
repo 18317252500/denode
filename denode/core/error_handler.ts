@@ -6,6 +6,6 @@ export abstract class ErrorHandler {
 
 export class DefaultErrorHandler extends ErrorHandler {
     handleError(error: any, injector?: Injector): void {
-        console.log(error)
+        // console.log(error)
     }
 }

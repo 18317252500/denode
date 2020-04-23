@@ -1,6 +1,12 @@
+## denode
+> 一款基于deno的mvc框架
+
+## 开始
+
+```ts
 import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from './@notadd/core/index.ts'
 import { HttpModule, HttpContext } from './@notadd/http/index.ts'
-import { Cookie } from 'https://github.com/notadd/denode/blob/master/%40notadd/deno/index.ts'
+import { Cookie } from './@notadd/deno/index.ts'
 @Injectable()
 export class DemoService { }
 
@@ -39,3 +45,4 @@ export class DemoController {
 export class AppModule { }
 
 corePlatform().bootstrapModule(AppModule);
+```
