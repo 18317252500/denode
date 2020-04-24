@@ -19,6 +19,9 @@ import { NotFoundException, NotImplementedException } from './exception.ts'
 export function contentType(filepath: string): string | undefined {
     return MIME.DB[extname(filepath)];
 }
+export {
+    MIME
+}
 export function notFoundHandler(): never {
     throw new NotFoundException();
 }
@@ -124,7 +127,7 @@ export class HttpContext {
         }
     }
 
-    private writeContentType(v: string): void {
+    writeContentType(v: string): void {
         if (!this.response.headers) {
             this.response.headers = new Headers();
         }
@@ -165,7 +168,7 @@ function register(property: string, method: string, options: any, methodOptions:
         } else if (typeof res === 'object') {
             context.json(res)
         }
-        
+
         request.respond(context.response)
     });
 }

@@ -1,7 +1,7 @@
-import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/core.ts'
-import { HttpModule, HttpContext } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/http/index.ts?t=2'
+import { Module, corePlatform, Injectable, Controller, Get, Post, Put, Context } from './denode/core.ts'
+import { HttpModule, HttpContext, MIME } from './denode/http/index.ts'
 import { React } from 'https://gitee.com/meepo_vip/denode/raw/master/denode/react.ts';
-
+import marked from './denode/marked/index.ts'
 @Injectable()
 export class DemoService { }
 
@@ -17,9 +17,14 @@ export class DemoController {
     return <h1>hello index get</h1>
   }
 
-  @Post()
-  indexPost() {
-    return `hello index post`
+  @Get('docs')
+  indexMarked(@Context() context: HttpContext) {
+    const res = marked.parse(`
+## demo
+    `)
+    context.writeContentType(MIME.TextHTML)
+    return res;
+    context.html(res)
   }
 
   @Put()
