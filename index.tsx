@@ -24,7 +24,6 @@ export class DemoController {
     `)
     context.writeContentType(MIME.TextHTML)
     return res;
-    context.html(res)
   }
 
   @Put()
