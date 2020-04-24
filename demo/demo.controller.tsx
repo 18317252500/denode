@@ -1,7 +1,8 @@
 import {
     Controller,
     Get,
-    Context
+    Context,
+    Css
 } from "../denode/core.ts";
 import { DemoService } from './demo.service.ts'
 import { HttpContext } from "../denode/http/index.ts";
@@ -18,7 +19,13 @@ export class DemoController {
             name: 'demo',
             value: 'demo2'
         });
-        return <h1>hello index get </h1>
+        const style = {
+            color: 'red'
+        }
+        return <h1 style={style}>
+            hello index get 
+            <script src="./1.js"></script>
+        </h1>
     }
 
     @Get('react')
@@ -39,12 +46,17 @@ export class DemoController {
         return <div>
             <h1>hello docs! </h1>
             <a href = "react" > react </a>
-            <div dangerouslySetInnerHTML = {{ __html: res }}> </div>
+            <div dangerouslySetInnerHTML={{__html: res}}> </div>
         </div>
     }
 
-    @Get('css')
+    @Css('css')
     css() {
-        return `hello index put`
+        return `
+body{
+
+    background-colro: red;
+}
+        `
     }
 }
