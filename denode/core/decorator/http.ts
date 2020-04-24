@@ -181,3 +181,51 @@ export const Trace = createMethodDecorator<string | TraceOptions>(TraceMetadataK
 
 export const ContextMetadataKey = `@nger/http ContextMetadataKey`
 export const Context = createParameterDecorator(ContextMetadataKey)
+
+
+export interface HtmlOptions { 
+    path: string;
+    type?: string;
+}
+export const HtmlMetadataKey = `@nger/http HtmlMetadataKey`
+export const Html = createMethodDecorator<string | HtmlOptions>(HtmlMetadataKey, it => {
+    const options = it.options;
+    if (typeof options === 'string') {
+        it.options = {
+            path: options,
+            type: 'html'
+        }
+    } else if (options) {
+        options.type = 'html'
+        it.options = options;
+    } else {
+        it.options = {
+            path: '/',
+            type: 'html'
+        }
+    }
+})
+
+
+export interface CssOptions { 
+    path: string;
+    type?: string;
+}
+export const CssMetadataKey = `@nger/http CssMetadataKey`
+export const Css = createMethodDecorator<string | CssOptions>(HtmlMetadataKey, it => {
+    const options = it.options;
+    if (typeof options === 'string') {
+        it.options = {
+            path: options,
+            type: 'css'
+        }
+    } else if (options) {
+        options.type = 'css'
+        it.options = options;
+    } else {
+        it.options = {
+            path: '/',
+            type: 'css'
+        }
+    }
+})

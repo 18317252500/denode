@@ -17,17 +17,32 @@ export class DemoController {
     return <h1>hello index get</h1>
   }
 
+  @Get('react')
+  react(@Context() context: HttpContext):any {
+    context.setCookie({
+      name: 'demo',
+      value: 'demo2'
+    });
+    return <div>
+      <h1>hello react!</h1>
+      <a href="docs">docs</a>
+    </div>
+  }
+
   @Get('docs')
-  indexMarked(@Context() context: HttpContext) {
+  docs(@Context() context: HttpContext) {
     const res = marked.parse(`
 ## demo
     `)
-    context.writeContentType(MIME.TextHTML)
-    return res;
+    return <div>
+      <h1>hello docs!</h1>
+      <a href="react">react</a>
+      <div dangerouslySetInnerHTML={{__html:res}}></div>
+    </div>
   }
 
-  @Put()
-  indexPut() {
+  @Get('css')
+  css() {
     return `hello index put`
   }
 }

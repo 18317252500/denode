@@ -6,7 +6,8 @@ import {
     PutMetadataKey, PutOptions, PostOptions, HeadMetadataKey, HeadOptions,
     PatchMetadataKey, PatchOptions, DeleteMetadataKey, DeleteOptions,
     ConnectMetadataKey, ConnectOptions, OptionsMetadataKey, OptionsOptions,
-    TraceMetadataKey, TraceOptions, ContextMetadataKey
+    TraceMetadataKey, TraceOptions, ContextMetadataKey, HtmlMetadataKey, HtmlOptions,
+    CssMetadataKey, CssOptions
 } from '../core/index.ts';
 import { HTTP_URL, HTTP_REQUEST, HTTP_COOKIES } from './token.ts';
 import { getCookies, Status, Response, join, extname, Cookie, setCookie, ServerRequest } from "../deno/index.ts";
@@ -156,10 +157,13 @@ function register(property: string, method: string, options: any, methodOptions:
         const res = await handler();
         const context = injector.get(HttpContext)
         const request = injector.get(HTTP_REQUEST)
-        console.log({
-            res,
-            isValidElement: isValidElement(res)
-        })
+        if (options.type === 'html') {
+            context.writeContentType(MIME.TextHTMLCharsetUTF8)
+        } else if (options.type === 'css') {
+            context.writeContentType(MIME.TextPlainCharsetUTF8)
+        } else if (options.type === 'xml') {
+            context.writeContentType(MIME.TextXMLCharsetUTF8)
+        }
         if (typeof res === 'string') {
             context.string(res)
         } else if (isValidElement(res)) {
@@ -168,7 +172,6 @@ function register(property: string, method: string, options: any, methodOptions:
         } else if (typeof res === 'object') {
             context.json(res)
         }
-
         request.respond(context.response)
     });
 }
@@ -249,6 +252,22 @@ export class HttpModule {
                         const options = parent.options;
                         const methodOptions = method.options;
                         register(method.property as string, 'TRACE', options, methodOptions, injector, ref)
+                    }
+                },
+                {
+                    provide: HtmlMetadataKey,
+                    useValue: (injector: Injector, method: IMethodDecorator<any, HtmlOptions>, parent: IClassDecorator<any, ControllerOptions>, ref: NgerRef<any>) => {
+                        const options = parent.options;
+                        const methodOptions = method.options;
+                        register(method.property as string, 'GET', options, methodOptions, injector, ref)
+                    }
+                },
+                {
+                    provide: CssMetadataKey,
+                    useValue: (injector: Injector, method: IMethodDecorator<any, CssOptions>, parent: IClassDecorator<any, ControllerOptions>, ref: NgerRef<any>) => {
+                        const options = parent.options;
+                        const methodOptions = method.options;
+                        register(method.property as string, 'GET', options, methodOptions, injector, ref)
                     }
                 },
                 {
